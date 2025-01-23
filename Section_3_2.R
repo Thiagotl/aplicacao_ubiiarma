@@ -76,8 +76,12 @@ ubxiiarma<-ubxiiarma.fit(ts(hum_train),ar=1,ma=1)
 
 ubxiiarma$forecast
 ubxiiarma$residuals
-
 plot(ubxiiarma$residuals)
+
+ubxiiarma<-ubxiiarma.fit(ts(hum_train),ar=1,ma=1,tau=.1)
+forecast::accuracy(ubxiiarma$fitted[-c(1:3)], hum_train[-c(1:3)])
+
+
 
 quant<-.25
 order<-matrix(NA,16,8)
@@ -152,7 +156,7 @@ row.names(results_insample)<-c("KARMAX","BARMAX","UWARIMAX","ARIMAX","KARMA",
 # lines(karma$fitted.values[-1],col=4)
 # lines(urrarma$fitted, col=6)
 # 
-# ubxiiarma<-ubxiiarma.fit(ts(hum_train),ar=1,ma=1,tau=.1)
-# forecast::accuracy(ubxiiarma$fitted[-c(1:3)], hum_train[-c(1:3)])
+ubxiiarma<-ubxiiarma.fit(ts(hum_train),ar=1,ma=1,tau=.1)
+forecast::accuracy(ubxiiarma$fitted[-c(1:3)], hum_train[-c(1:3)])
 
 print(results)
