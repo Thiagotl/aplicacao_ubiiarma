@@ -5,15 +5,20 @@ library(tidyverse)
 
 data <- read_delim("combined_hourly_data.csv", 
                    delim = ";", escape_double = FALSE, trim_ws = TRUE)  |>  
-  mutate(timestamp=as.POSIXct(timestamp, tz="GMT",
+  mutate(timestamp=as.POSIXct(timestamp, tz="GMT", # convertendo no formato data e hora
                               origin="1970-01-01 00:00:00"),
-         hum=hum/100)
+         hum=hum/100) #hum - humidade
 #
 
 View(data)
-n<-round(dim(data)[1]*.8)-149
-data<-data[150:1870,]
+n<-round(dim(data)[1]*.8)-149 # dim(data)[1] obtem o número de linhas no conjunto de dados 
+                              # dim(data)[1]*.8 obtem 80% do banco de dados 
 
+data<-data[150:1870,]  # data[rows, columns] é usada para filtrar as linhas desejadas.
+                       # neste caso temos as linhas com índice 150:1870
+
+
+View(data)
 #########################
 ## Descriptive analysis ##
 #########################
@@ -22,7 +27,7 @@ length(table(strftime(as.POSIXct(data$timestamp, tz="GMT",
                       format="%Y%m%d", tz="GMT"))) # number of days
 
 summary1<-apply(data[,c(3,6:13)],2,summary)
-sums<-as.matrix(bind_rows(summary1))
+sums<-as.matrix(bind_rows(as.data.frame(summary1)))
 rownames(sums)<-colnames(data[,c(3,6:13)])
 sums[is.na(sums)]<-0
 descriptive<-(cbind(sums[,c(1,3,4,6)],
