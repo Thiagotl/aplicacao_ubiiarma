@@ -23,6 +23,9 @@ colnames(datatrain)<-paste0(colnames(datatrain),"_train")
 datatest<-cbind(data[(n+1):(dim(data)[1]),])  
 colnames(datatest)<-paste0(colnames(datatest),"_test")
 
+View(datatrain)
+
+
 datatrain$RSSI_03_train[is.na(datatrain$RSSI_03_train)]<-
   mean(na.omit(datatrain$RSSI_03_train))
 datatrain$RSSI_04_train[is.na(datatrain$RSSI_04_train)]<-
@@ -37,8 +40,11 @@ datatrain$RSSI_08_train[is.na(datatrain$RSSI_08_train)]<-
 attach(datatrain)
 attach(datatest)
 attach(data)
-X<-as.matrix(datatrain[,6:13])
+X<-as.matrix(datatrain[,6:13]) 
 Xtest<-as.matrix(datatest[,6:13])
+
+
+
 
 ######################
 ## stacionary tests ##
@@ -65,6 +71,13 @@ new1<-Arima(hum_test,model=a01) #one-step-ahead
 a02<-auto.arima(hum_train, xreg = X)
 new2<-Arima(hum_test,xreg = Xtest,model=a02) #one-step-ahead
 
+
+ubxiiarma<-ubxiiarma.fit(ts(hum_train),ar=1,ma=1)
+
+ubxiiarma$forecast
+ubxiiarma$residuals
+
+plot(ubxiiarma$residuals)
 
 quant<-.25
 order<-matrix(NA,16,8)
