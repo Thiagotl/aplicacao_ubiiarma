@@ -214,6 +214,7 @@ row.names(results_outsample)<-
     "ARIMAX",
     "BARMA","KARMA","UWARMA","ARIMA")
 
-# xtable::xtable((results_outsample),digits=4)
+xtable::xtable((results_outsample),digits=4)
 
-# round(results_outsample[,1:2],4)
+round(results_outsample[,1:2],4)
+
