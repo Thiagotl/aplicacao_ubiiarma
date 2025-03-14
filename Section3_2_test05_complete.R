@@ -71,6 +71,9 @@ table.stationarity<-data.frame(
 ########################
 a01<-auto.arima(hum_train)
 new1<-Arima(hum_test,model=a01) #one-step-ahead
+forecast(a01, h = length(hum_test))
+
+new1$fitted
 a02<-auto.arima(hum_train, xreg = X)
 new2<-Arima(hum_test,xreg = Xtest,model=a02) #one-step-ahead
 # lmtest::coeftest(a02)
