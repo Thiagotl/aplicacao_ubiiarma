@@ -203,6 +203,7 @@ uwarmax_out<-UWARFIMA.extract(yt=hum,xreg = X0,rho=quant,
                                            nu = uwarmax$coefficients[(oruwarmax[1]+nX+2+oruwarmax[2])])
 )
 
+a<-(n+1):(dim(data)[1])
 results_outsample<-rbind(
   forecast::accuracy(barmax_out$mut[(n+1):(dim(data)[1])], hum_test),
   forecast::accuracy(karmax_out$mut[(n+1):(dim(data)[1])], hum_test),
